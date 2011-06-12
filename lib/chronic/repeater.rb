@@ -13,9 +13,9 @@ class Chronic::Repeater < Chronic::Tag #:nodoc:
   end
 
   def self.scan_for_season_names(token)
-    scanner = {/^springs?$/ => :spring,
-               /^summers?$/ => :summer,
-               /^(autumn)|(fall)s?$/ => :autumn,
+    scanner = {/^(lente)|(voorjaar)s?$/ => :spring,
+               /^zomers?$/ => :summer,
+               /^(herfst)|(najaar)s?$/ => :autumn,
                /^winters?$/ => :winter}
     scanner.keys.each do |scanner_item|
       return Chronic::RepeaterSeasonName.new(scanner[scanner_item]) if scanner_item =~ token.word
@@ -25,16 +25,16 @@ class Chronic::Repeater < Chronic::Tag #:nodoc:
   end
 
   def self.scan_for_month_names(token)
-    scanner = {/^jan\.?(uary)?$/ => :january,
-               /^feb\.?(ruary)?$/ => :february,
-               /^mar\.?(ch)?$/ => :march,
+    scanner = {/^jan\.?(uari)?$/ => :january,
+               /^feb\.?(ruari)?$/ => :february,
+               /^maa\.?(rt)?$/ => :march,
                /^apr\.?(il)?$/ => :april,
-               /^may$/ => :may,
-               /^jun\.?e?$/ => :june,
-               /^jul\.?y?$/ => :july,
-               /^aug\.?(ust)?$/ => :august,
+               /^mei$/ => :may,
+               /^jun\.?i?$/ => :june,
+               /^jul\.?i?$/ => :july,
+               /^aug\.?(ustus)?$/ => :august,
                /^sep\.?(t\.?|tember)?$/ => :september,
-               /^oct\.?(ober)?$/ => :october,
+               /^o[ck]t\.?(ober)?$/ => :october, #misspelling
                /^nov\.?(ember)?$/ => :november,
                /^dec\.?(ember)?$/ => :december}
     scanner.keys.each do |scanner_item|
@@ -44,16 +44,18 @@ class Chronic::Repeater < Chronic::Tag #:nodoc:
   end
 
   def self.scan_for_day_names(token)
-    scanner = {/^m[ou]n(day)?$/ => :monday,
-               /^t(ue|eu|oo|u|)s(day)?$/ => :tuesday,
-               /^tue$/ => :tuesday,
-               /^we(dnes|nds|nns)day$/ => :wednesday,
-               /^wed$/ => :wednesday,
-               /^th(urs|ers)day$/ => :thursday,
-               /^thu$/ => :thursday,
-               /^fr[iy](day)?$/ => :friday,
-               /^sat(t?[ue]rday)?$/ => :saturday,
-               /^su[nm](day)?$/ => :sunday}
+    scanner = {/^ma(a)?n(dag)?$/ => :monday,
+               /^dins(dag)?$/ => :tuesday,
+               /^din$/ => :tuesday,
+               /^woen(s)?dag$/ => :wednesday,
+               /^woe$/ => :wednesday,
+               /^donderdag$/ => :thursday,
+               /^don$/ => :thursday,
+               /^vr(ij|y)(dag)?$/ => :friday,
+               /^vr[iy]$/ => :friday,
+               /^zat[ue]r(dag)?$/ => :saturday,
+               /^zat$/ => :saturday,
+               /^zon(dag)?$/ => :sunday}
     scanner.keys.each do |scanner_item|
       return Chronic::RepeaterDayName.new(scanner[scanner_item]) if scanner_item =~ token.word
     end
@@ -63,10 +65,10 @@ class Chronic::Repeater < Chronic::Tag #:nodoc:
   def self.scan_for_day_portions(token)
     scanner = {/^ams?$/ => :am,
                /^pms?$/ => :pm,
-               /^mornings?$/ => :morning,
-               /^afternoons?$/ => :afternoon,
-               /^evenings?$/ => :evening,
-               /^(night|nite)s?$/ => :night}
+               /^ochtends?$/ => :morning,
+               /^middags?$/ => :afternoon,
+               /^avondss?$/ => :evening,
+               /^nachts?$/ => :night}
     scanner.keys.each do |scanner_item|
       return Chronic::RepeaterDayPortion.new(scanner[scanner_item]) if scanner_item =~ token.word
     end
@@ -81,17 +83,17 @@ class Chronic::Repeater < Chronic::Tag #:nodoc:
   end
 
   def self.scan_for_units(token)
-    scanner = {/^years?$/ => :year,
-               /^seasons?$/ => :season,
-               /^months?$/ => :month,
-               /^fortnights?$/ => :fortnight,
-               /^weeks?$/ => :week,
-               /^weekends?$/ => :weekend,
-               /^(week|business)days?$/ => :weekday,
-               /^days?$/ => :day,
-               /^hours?$/ => :hour,
-               /^minutes?$/ => :minute,
-               /^seconds?$/ => :second}
+    scanner = {/^jaa?r(s|en)?$/ => :year,
+               /^[sz]ei[sz]oen(s|en)?$/ => :season,
+               /^maand(s|en)?$/ => :month,
+             #   /^tweewekelijks?$/ => :fortnight, # no such thing in dutch
+               /^wee?k(en)?$/ => :week,
+               /^weekend(s|en)?$/ => :weekend,
+               /^(week|kantoor)dag(en)?$/ => :weekday,
+               /^dag(en)?$/ => :day,
+               /^u?ur(en)?$/ => :hour,
+               /^minuu?t(en)?$/ => :minute,
+               /^seconde(s|n)?$/ => :second}
     scanner.keys.each do |scanner_item|
       if scanner_item =~ token.word
         klass_name = 'Chronic::Repeater' + scanner[scanner_item].to_s.capitalize

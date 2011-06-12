@@ -94,6 +94,8 @@ module Chronic
         raise
         return nil
       end
+      
+        
 
       # guess a time within a span if required
       if options[:guess]
@@ -113,22 +115,20 @@ module Chronic
       normalized_text.gsub!(/['"\.,]/, '')
       normalized_text.gsub!(/ \-(\d{4})\b/, ' tzminus\1')
       normalized_text.gsub!(/([\/\-\,\@])/) { ' ' + $1 + ' ' }
-      normalized_text.gsub!(/\btoday\b/, 'this day')
-      normalized_text.gsub!(/\btomm?orr?ow\b/, 'next day')
-      normalized_text.gsub!(/\byesterday\b/, 'last day')
-      normalized_text.gsub!(/\bnoon\b/, '12:00')
-      normalized_text.gsub!(/\bmidnight\b/, '24:00')
-      normalized_text.gsub!(/\bbefore now\b/, 'past')
-      normalized_text.gsub!(/\bnow\b/, 'this second')
-      normalized_text.gsub!(/\b(ago|before)\b/, 'past')
-      normalized_text.gsub!(/\bthis past\b/, 'last')
-      normalized_text.gsub!(/\bthis last\b/, 'last')
-      normalized_text.gsub!(/\b(?:in|during) the (morning)\b/, '\1')
-      normalized_text.gsub!(/\b(?:in the|during the|at) (afternoon|evening|night)\b/, '\1')
-      normalized_text.gsub!(/\btonight\b/, 'this night')
+      normalized_text.gsub!(/\bvandaag\b/, 'deze dag')
+      normalized_text.gsub!(/\btmorgen\b/, 'volgende dag')
+      normalized_text.gsub!(/\bgisteren\b/, 'vorige dag')
+      normalized_text.gsub!(/\bmiddag\b/, '12:00')
+      normalized_text.gsub!(/\bmiddernacht\b/, '24:00')
+      normalized_text.gsub!(/\beerder\b/, 'verleden')
+      normalized_text.gsub!(/\bnu\b/, 'op dit moment')
+      normalized_text.gsub!(/\b(geleden|voor die tijd)\b/, 'verleden')
+      normalized_text.gsub!(/\b(?:in|gedurende) de (morgen)\b/, '\1')
+      normalized_text.gsub!(/\b(?:in de|gedurende|\'s) (middag|avond|nacht)(s?)\b/, '\1')
+      normalized_text.gsub!(/\bvannacht\b/, 'deze nacht')
       normalized_text.gsub!(/\b\d+:?\d*[ap]\b/,'\0m')
-      normalized_text.gsub!(/(\d)([ap]m|oclock)\b/, '\1 \2')
-      normalized_text.gsub!(/\b(hence|after|from)\b/, 'future')
+      normalized_text.gsub!(/(\d)([ap]m|uur)\b/, '\1 \2')
+      normalized_text.gsub!(/\b(vandaar|na|van)\b/, 'toekomst')
       normalized_text = numericize_ordinals(normalized_text)
     end
 

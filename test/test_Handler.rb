@@ -10,12 +10,12 @@ class TestHandler < Test::Unit::TestCase
   def test_handler_class_1
     handler = Chronic::Handler.new([:repeater], :handler)
 
-    tokens = [Chronic::Token.new('friday')]
+    tokens = [Chronic::Token.new('vrijdag')]
     tokens[0].tag(Chronic::RepeaterDayName.new(:friday))
 
     assert handler.match(tokens, Chronic.definitions)
 
-    tokens << Chronic::Token.new('afternoon')
+    tokens << Chronic::Token.new('middag')
     tokens[1].tag(Chronic::RepeaterDayPortion.new(:afternoon))
 
     assert !handler.match(tokens, Chronic.definitions)
@@ -24,17 +24,17 @@ class TestHandler < Test::Unit::TestCase
   def test_handler_class_2
     handler = Chronic::Handler.new([:repeater, :repeater?], :handler)
 
-    tokens = [Chronic::Token.new('friday')]
+    tokens = [Chronic::Token.new('vrijdag')]
     tokens[0].tag(Chronic::RepeaterDayName.new(:friday))
 
     assert handler.match(tokens, Chronic.definitions)
 
-    tokens << Chronic::Token.new('afternoon')
+    tokens << Chronic::Token.new('middag')
     tokens[1].tag(Chronic::RepeaterDayPortion.new(:afternoon))
 
     assert handler.match(tokens, Chronic.definitions)
 
-    tokens << Chronic::Token.new('afternoon')
+    tokens << Chronic::Token.new('middag')
     tokens[2].tag(Chronic::RepeaterDayPortion.new(:afternoon))
 
     assert !handler.match(tokens, Chronic.definitions)
@@ -43,12 +43,12 @@ class TestHandler < Test::Unit::TestCase
   def test_handler_class_3
     handler = Chronic::Handler.new([:repeater, 'time?'], :handler)
 
-    tokens = [Chronic::Token.new('friday')]
+    tokens = [Chronic::Token.new('vrijdag')]
     tokens[0].tag(Chronic::RepeaterDayName.new(:friday))
 
     assert handler.match(tokens, Chronic.definitions)
 
-    tokens << Chronic::Token.new('afternoon')
+    tokens << Chronic::Token.new('middag')
     tokens[1].tag(Chronic::RepeaterDayPortion.new(:afternoon))
 
     assert !handler.match(tokens, Chronic.definitions)
@@ -57,7 +57,7 @@ class TestHandler < Test::Unit::TestCase
   def test_handler_class_4
     handler = Chronic::Handler.new([:repeater_month_name, :scalar_day, 'time?'], :handler)
 
-    tokens = [Chronic::Token.new('may')]
+    tokens = [Chronic::Token.new('mei')]
     tokens[0].tag(Chronic::RepeaterMonthName.new(:may))
 
     assert !handler.match(tokens, Chronic.definitions)
@@ -71,7 +71,7 @@ class TestHandler < Test::Unit::TestCase
   def test_handler_class_5
     handler = Chronic::Handler.new([:repeater, 'time?'], :handler)
 
-    tokens = [Chronic::Token.new('friday')]
+    tokens = [Chronic::Token.new('vrijdag')]
     tokens[0].tag(Chronic::RepeaterDayName.new(:friday))
 
     assert handler.match(tokens, Chronic.definitions)
@@ -91,8 +91,8 @@ class TestHandler < Test::Unit::TestCase
     handler = Chronic::Handler.new([:scalar, :repeater, :pointer], :handler)
 
     tokens = [Chronic::Token.new('3'),
-              Chronic::Token.new('years'),
-              Chronic::Token.new('past')]
+              Chronic::Token.new('jaren'),
+              Chronic::Token.new('geleden')]
 
     tokens[0].tag(Chronic::Scalar.new(3))
     tokens[1].tag(Chronic::RepeaterYear.new(:year))

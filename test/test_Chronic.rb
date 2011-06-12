@@ -10,7 +10,7 @@ class TestChronic < Test::Unit::TestCase
   def test_post_normalize_am_pm_aliases
     # affect wanted patterns
 
-    tokens = [Chronic::Token.new("5:00"), Chronic::Token.new("morning")]
+    tokens = [Chronic::Token.new("5:00"), Chronic::Token.new("ochtend")]
     tokens[0].tag(Chronic::RepeaterTime.new("5:00"))
     tokens[1].tag(Chronic::RepeaterDayPortion.new(:morning))
 
@@ -23,7 +23,7 @@ class TestChronic < Test::Unit::TestCase
 
     # don't affect unwanted patterns
 
-    tokens = [Chronic::Token.new("friday"), Chronic::Token.new("morning")]
+    tokens = [Chronic::Token.new("vrijdag"), Chronic::Token.new("ochtend")]
     tokens[0].tag(Chronic::RepeaterDayName.new(:friday))
     tokens[1].tag(Chronic::RepeaterDayPortion.new(:morning))
 

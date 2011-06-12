@@ -23,9 +23,9 @@ module Chronic
       {:time => [Handler.new([:repeater_time, :repeater_day_portion?], nil)],
 
        :date => [Handler.new([:repeater_day_name, :repeater_month_name, :scalar_day, :repeater_time, :separator_slash_or_dash?, :time_zone, :scalar_year], :handle_rdn_rmn_sd_t_tz_sy),
-                 Handler.new([:repeater_month_name, :scalar_day, :scalar_year], :handle_rmn_sd_sy),
-                 Handler.new([:repeater_month_name, :scalar_day, :scalar_year, :separator_at?, 'time?'], :handle_rmn_sd_sy),
-                 Handler.new([:repeater_month_name, :scalar_day, :separator_at?, 'time?'], :handle_rmn_sd),
+                 Handler.new([:scalar_day, :repeater_month_name, :scalar_year], :handle_rmn_sd_sy),
+                 Handler.new([:scalar_day, :repeater_month_name, :scalar_year, :separator_at?, 'time?'], :handle_rmn_sd_sy),
+                 Handler.new([:scalar_day, :repeater_month_name, :separator_at?, 'time?'], :handle_rmn_sd),
                  Handler.new([:repeater_time, :repeater_day_portion?, :separator_on?, :repeater_month_name, :scalar_day], :handle_rmn_sd_on),
                  Handler.new([:repeater_month_name, :ordinal_day, :separator_at?, 'time?'], :handle_rmn_od),
                  Handler.new([:repeater_time, :repeater_day_portion?, :separator_on?, :repeater_month_name, :ordinal_day], :handle_rmn_od_on),
@@ -58,7 +58,7 @@ module Chronic
 
     def tokens_to_span(tokens, options) #:nodoc:
       # maybe it's a specific date
-
+      puts tokens
       definitions = self.definitions(options)
       definitions[:date].each do |handler|
         if handler.match(tokens, definitions)
@@ -139,7 +139,7 @@ module Chronic
 
     #--------------
 
-    def handle_m_d(month, day, time_tokens, options) #:nodoc:
+    def handle_m_d(day, month, time_tokens, options) #:nodoc:
       month.start = @now
       span = month.this(options[:context])
 
@@ -149,7 +149,7 @@ module Chronic
     end
 
     def handle_rmn_sd(tokens, options) #:nodoc:
-      handle_m_d(tokens[0].get_tag(RepeaterMonthName), tokens[1].get_tag(ScalarDay).type, tokens[2..tokens.size], options)
+      handle_m_d(tokens[0].get_tag(ScalarDay).type, tokens[1].get_tag(RepeaterMonthName), tokens[2..tokens.size], options)
     end
 
     def handle_rmn_sd_on(tokens, options) #:nodoc:
@@ -500,6 +500,8 @@ module Chronic
           match = tokens[token_index] && !tokens[token_index].tags.select { |o| o.kind_of?(klass) }.empty?
           return false if !match && !optional
           (token_index += 1; next) if match
+          puts token_index
+         puts tokens.size 
           next if !match && optional
         elsif element.instance_of? String
           return true if optional && token_index == tokens.size
@@ -512,6 +514,7 @@ module Chronic
           raise(ChronicPain, "Invalid match type: #{element.class}")
         end
       end
+      puts token_index
       return false if token_index != tokens.size
       return true
     end
