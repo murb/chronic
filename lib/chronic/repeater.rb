@@ -63,12 +63,16 @@ class Chronic::Repeater < Chronic::Tag #:nodoc:
   end
 
   def self.scan_for_day_portions(token)
+ 
     scanner = {/^ams?$/ => :am,
                /^pms?$/ => :pm,
                /^ochtends?$/ => :morning,
                /^middags?$/ => :afternoon,
-               /^avondss?$/ => :evening,
-               /^nachts?$/ => :night}
+               /^avonds?$/ => :evening,
+               /^nachts?$/ => :night,
+               /^nacht?$/ => :night
+               
+               }
     scanner.keys.each do |scanner_item|
       return Chronic::RepeaterDayPortion.new(scanner[scanner_item]) if scanner_item =~ token.word
     end
@@ -91,7 +95,7 @@ class Chronic::Repeater < Chronic::Tag #:nodoc:
                /^weekend(s|en)?$/ => :weekend,
                /^(week|kantoor)dag(en)?$/ => :weekday,
                /^dag(en)?$/ => :day,
-               /^u?ur(en)?$/ => :hour,
+               #/^u?ur(en)?$/ => :hour, # had to disable this, 'uur' is also used as o'clock in English
                /^minuu?t(en)?$/ => :minute,
                /^seconde(s|n)?$/ => :second}
     scanner.keys.each do |scanner_item|

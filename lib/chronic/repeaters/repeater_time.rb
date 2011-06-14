@@ -113,6 +113,10 @@ class Chronic::RepeaterTime < Chronic::Repeater #:nodoc:
 
     self.next(context)
   end
+  
+  def time?
+    @type.to_f
+  end
 
   def width
     1

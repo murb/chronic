@@ -30,7 +30,7 @@ module Chronic
     end
 
     def self.scan_for_at(token)
-      scanner = {/^(at|@)$/ => :at}
+      scanner = {/^(om|@)$/ => :at}
       scanner.keys.each do |scanner_item|
         return SeparatorAt.new(scanner[scanner_item]) if scanner_item =~ token.word
       end
@@ -46,7 +46,7 @@ module Chronic
     end
 
     def self.scan_for_on(token)
-      scanner = {/^on$/ => :on}
+      scanner = {/^op$/ => :on}
       scanner.keys.each do |scanner_item|
         return SeparatorOn.new(scanner[scanner_item]) if scanner_item =~ token.word
       end

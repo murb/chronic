@@ -65,9 +65,10 @@ module Chronic
 
       # put the text into a normal format to ease scanning
       text = self.pre_normalize(text)
-
       # get base tokens for each word
       @tokens = self.base_tokenize(text)
+      
+
 
       # scan the tokens with each token scanner
       [Repeater].each do |tokenizer|
@@ -95,8 +96,6 @@ module Chronic
         return nil
       end
       
-        
-
       # guess a time within a span if required
       if options[:guess]
         return self.guess(span)
@@ -111,15 +110,19 @@ module Chronic
     # ordinals (third => 3rd)
     def pre_normalize(text) #:nodoc:
       normalized_text = text.to_s.downcase
+      normalized_text = decompose_words(normalized_text)
       normalized_text = numericize_numbers(normalized_text)
       normalized_text.gsub!(/['"\.,]/, '')
+
       normalized_text.gsub!(/ \-(\d{4})\b/, ' tzminus\1')
       normalized_text.gsub!(/([\/\-\,\@])/) { ' ' + $1 + ' ' }
       normalized_text.gsub!(/\bvandaag\b/, 'deze dag')
-      normalized_text.gsub!(/\btmorgen\b/, 'volgende dag')
+      normalized_text.gsub!(/\bmorgen\b/, 'volgende dag')
       normalized_text.gsub!(/\bgisteren\b/, 'vorige dag')
+      normalized_text.gsub!(/\bochtends\b/, 'am')
+      
       normalized_text.gsub!(/\bmiddag\b/, '12:00')
-      normalized_text.gsub!(/\bmiddernacht\b/, '24:00')
+      normalized_text.gsub!(/\bmidder nacht\b/, '23:59')      
       normalized_text.gsub!(/\beerder\b/, 'verleden')
       normalized_text.gsub!(/\bnu\b/, 'op dit moment')
       normalized_text.gsub!(/\b(geleden|voor die tijd)\b/, 'verleden')
@@ -130,6 +133,12 @@ module Chronic
       normalized_text.gsub!(/(\d)([ap]m|uur)\b/, '\1 \2')
       normalized_text.gsub!(/\b(vandaar|na|van)\b/, 'toekomst')
       normalized_text = numericize_ordinals(normalized_text)
+    end
+    
+    # Instead of 'saterday evening' a dutchman would write 'saterdayevening'
+    def decompose_words(text) #:nodoc:
+      text.gsub!(/(morgen|avond|nacht|ochtend)\b/, ' \1')
+      text
     end
 
     # Convert number words to numbers (three => 3)

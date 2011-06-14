@@ -21,7 +21,7 @@ class Numerizer
                   ['vijf(\W|$)', '5\1'],
                   ['zes(\W|$)', '6\1'],
                   ['zeven(\W|$)', '7\1'],
-                  ['acht', '8'],
+                  ['\bacht', '8'],
                   ['negen(\W|$)', '9\1'],
                   ['tien', '10'],
                   ['\been[\b^$]', '1'] # doesn't make sense for an 'a' at the end to be a 1
@@ -50,7 +50,7 @@ class Numerizer
     # preprocess
     string.gsub!(/ +|([^\d])-([^\d])/, '\1 \2') # will mutilate hyphenated-words but shouldn't matter for date extraction
     string.gsub!(/een half/, 'haAlf') # take the 'a' out so it doesn't turn into a 1, save the half for the end
-    string.gsub!(/(n|r|f|s|t|d)en/,'\1 en ')
+    string.gsub!(/(n|r|f|s|acht|d)en/,'\1 en ')
 
     BIG_PREFIXES.each do |bp|
       string.gsub!(/(#{bp[0]})/, ' \1')
