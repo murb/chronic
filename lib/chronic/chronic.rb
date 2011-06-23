@@ -111,7 +111,8 @@ module Chronic
     def pre_normalize(text) #:nodoc:
       normalized_text = text.to_s.downcase
       normalized_text.gsub!(/\bvan de\b/,'')
-      
+      normalized_text.gsub!(/\beerste\b/,'1ste')
+      normalized_text.gsub!(/\bderde\b/,'3de')
       normalized_text = decompose_words(normalized_text)
       normalized_text = numericize_numbers(normalized_text)
       normalized_text.gsub!(/['"\.,]/, '')

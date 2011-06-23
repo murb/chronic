@@ -273,6 +273,9 @@ class TestParsing < Test::Unit::TestCase
     time = parse_now("vrijdag 11 's nachts")
     assert_equal Time.local(2006, 8, 18, 23), time
 
+    time = parse_now("vrijdag 11 's avond")
+    assert_equal Time.local(2006, 8, 18, 23), time
+    
     time = parse_now("vrijdag 11 in de avond")
     assert_equal Time.local(2006, 8, 18, 23), time
 
@@ -357,7 +360,7 @@ class TestParsing < Test::Unit::TestCase
     time = parse_now("deze dinsdag")
     assert_equal Time.local(2006, 8, 22, 12), time
 
-    time = parse_now("volgende dinsdag")
+    time = parse_now("aankomende dinsdag")
     assert_equal Time.local(2006, 8, 22, 12), time
 
     time = parse_now("afgelopen dinsdag")
@@ -582,7 +585,7 @@ class TestParsing < Test::Unit::TestCase
 
   def test_parse_guess_o_r_s_r
     
-    time = parse_now("3de woensdag in november")
+    time = parse_now("  3de woensdag van november")
     assert_equal Time.local(2006, 11, 15, 12), time
 
     time = parse_now("10de woensdag in november")
@@ -597,7 +600,7 @@ class TestParsing < Test::Unit::TestCase
     time = parse_now("3de maand, volgend jaar")
     assert_equal Time.local(2007, 3, 16, 11,30), time
 
-    time = parse_now("3de donderdag aanstaande september")
+    time = parse_now("derde donderdag aanstaande september")
     assert_equal Time.local(2006, 9, 21, 12), time
 
     time = parse_now("4de dag van de vorige week")

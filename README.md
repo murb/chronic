@@ -1,17 +1,18 @@
-Chronic
-=======
+Chronic_NL
+==========
 
 ## DESCRIPTION
 
-Chronic is a natural language date/time parser written in pure Ruby. See below
+Chronic_NL is a natural language date/time parser written in pure Ruby cloned and translated to Dutch from the original Chronic. See below
 for the wide variety of formats Chronic will parse.
 
+Note regarding Chronic_NL: not *everything* works from the original Chronic library works yet, see the examples below, and some solutions stil are a bit hacky. Still, I think its may be enough for many purposes. Hence I'm sharing it. I'll be testing it for the next couple of weeks in real life.
 
 ## INSTALLATION
 
 The best way to install Chronic is with RubyGems:
 
-    $ [sudo] gem install chronic
+    it's still wip, please use git #$ [sudo] gem install chronic
 
 
 ## USAGE
@@ -26,22 +27,22 @@ Chronic.parse method.
 
     #---
 
-    Chronic.parse('tomorrow')
+    Chronic.parse('morgen')
       #=> Mon Aug 28 12:00:00 PDT 2006
 
-    Chronic.parse('monday', :context => :past)
+    Chronic.parse('maandag', :context => :past)
       #=> Mon Aug 21 12:00:00 PDT 2006
 
-    Chronic.parse('this tuesday 5:00')
+    Chronic.parse('aanstaande dinsdag 5:00')
       #=> Tue Aug 29 17:00:00 PDT 2006
 
-    Chronic.parse('this tuesday 5:00', :ambiguous_time_range => :none)
+    Chronic.parse('aandstaande dinsdag 5:00', :ambiguous_time_range => :none)
       #=> Tue Aug 29 05:00:00 PDT 2006
 
-    Chronic.parse('may 27th', :now => Time.local(2000, 1, 1))
+    Chronic.parse('27ste mei', :now => Time.local(2000, 1, 1))
       #=> Sat May 27 12:00:00 PDT 2000
 
-    Chronic.parse('may 27th', :guess => false)
+    Chronic.parse('27ste mei', :guess => false)
       #=> Sun May 27 00:00:00 PDT 2007..Mon May 28 00:00:00 PDT 2007
 
 See Chronic.parse for detailed usage instructions.
@@ -55,32 +56,31 @@ insensitive and will handle common abbreviations and misspellings.
 
 Simple
 
-* thursday
+* donderdag #thursday
 * november
-* summer
-* friday 13:00
-* mon 2:35
+* zomer #summer
+* vrijdag 13:00 #friday 13:00
+* maa 2:35 #mon 2:35
 * 4pm
-* 6 in the morning
-* friday 1pm
-* sat 7 in the evening
-* yesterday
-* today
-* tomorrow
-* this tuesday
-* next month
-* last winter
-* this morning
-* last night
-* this second
-* yesterday at 4:00
-* last friday at 20:00
-* last week tuesday
-* tomorrow at 6:45pm
-* afternoon yesterday
-* thursday last week
+* 6 uur in de ochtend #6 in the morning
+* vrijdag 1pm #friday 1pm
+* zaterdag 7, 's avonds #sat 7 in the evening
+* gisteren #yesterday
+* vandaag #today
+* morgen #tomorrow
+* aankomende dinsdag #this tuesday
+* volgende maand #next month
+* afgelopen winter #last winter
+* deze ochtend #this morning
+* afgelopen nacht #last night
+* deze seconde #this second
+* gisteren om 4:00 #yesterday at 4:00
+* afgelopemn vrijdag om 20:00 #last friday at 20:00
+* vorige week dinsdag #last week tuesday
+* morgen om 6:45pm #tomorrow at 6:45pm
+* gistermiddag #afternoon yesterday
 
-Complex
+Complex (doesn't work (feel free to fix this))
 
 * 3 years ago
 * 5 months before now
@@ -91,27 +91,30 @@ Complex
 * 1 year ago tomorrow
 * 3 months ago saturday at 5:00 pm
 * 7 hours before tomorrow at noon
-* 3rd wednesday in november
-* 3rd month next year
-* 3rd thursday this september
-* 4th day last week
+
+Minder (#less) complex 
+
+* 3de woensdag van november #3rd wednesday in november
+* Derde maand volgend jaar #3rd month next year
+* Derde donderdag deze september #3rd thursday this september
+* Vierde dag van de vorige week #4th day last week
 
 Specific Dates
 
-* January 5
-* dec 25
-* may 27th
-* October 2006
-* oct 06
-* jan 3 2010
-* february 14, 2004
+* 5 januari #January 5
+* 25 dec #dec 25
+* 27ste mei #may 27th
+* oktober 2006 #October 2006
+* okt 06 #oct 06
+* 3 jan 2010 #jan 3 2010
+* 14 februari 2004 #february 14, 2004
 * 3 jan 2000
 * 17 april 85
 * 5/27/1979
 * 27/5/1979
 * 05/06
 * 1979-05-27
-* Friday
+* Vrijdag #Friday
 * 5
 * 4:00
 * 17:00
@@ -119,8 +122,8 @@ Specific Dates
 
 Specific Times (many of the above with an added time)
 
-* January 5 at 7pm
-* 1979-05-27 05:00:00
+* 5 januari om 7pm #January 5 at 7pm
+* #1979-05-27 05:00:00
 * etc
 
 
