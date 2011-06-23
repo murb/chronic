@@ -40,10 +40,14 @@ module Chronic
                  Handler.new([:scalar_year, :separator_slash_or_dash, :scalar_month, :separator_slash_or_dash, :scalar_day, :separator_at?, 'time?'], :handle_sy_sm_sd),
                  Handler.new([:scalar_month, :separator_slash_or_dash, :scalar_year], :handle_sm_sy)],
 
+#afgelopen(grabber-last) dag(repeater-day) in(pointer-future, separator-in) de(ordinal) toekomst(pointer-future, timezone) 12:00(repeater-time-0?) 
+
        # tonight at 7pm
        :anchor => [Handler.new([:grabber?, :repeater, :separator_at?, :repeater?, :repeater?], :handle_r),
                    Handler.new([:grabber?, :repeater, :repeater, :separator_at?, :repeater?, :repeater?], :handle_r),
-                   Handler.new([:repeater, :grabber, :repeater], :handle_r_g_r)],
+                 #          Handler.new([:grabber?, :repeater, :separator_in?, :ordinal, :pointer]),
+                   Handler.new([:repeater, :grabber, :repeater], :handle_r_g_r)
+                   ],
 
        # 3 weeks from now, in 2 months
        :arrow => [Handler.new([:scalar, :repeater, :pointer], :handle_s_r_p),

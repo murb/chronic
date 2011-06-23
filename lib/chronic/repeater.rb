@@ -70,7 +70,8 @@ class Chronic::Repeater < Chronic::Tag #:nodoc:
                /^middags?$/ => :afternoon,
                /^avonds?$/ => :evening,
                /^nachts?$/ => :night,
-               /^nacht?$/ => :night
+               /^nacht?$/ => :night,
+               /^namiddag$/ => :afternoon
                
                }
     scanner.keys.each do |scanner_item|

@@ -110,34 +110,48 @@ module Chronic
     # ordinals (third => 3rd)
     def pre_normalize(text) #:nodoc:
       normalized_text = text.to_s.downcase
+      normalized_text.gsub!(/\bvan de\b/,'')
+      
       normalized_text = decompose_words(normalized_text)
       normalized_text = numericize_numbers(normalized_text)
       normalized_text.gsub!(/['"\.,]/, '')
-
+      normalized_text = repair_words(normalized_text)
       normalized_text.gsub!(/ \-(\d{4})\b/, ' tzminus\1')
       normalized_text.gsub!(/([\/\-\,\@])/) { ' ' + $1 + ' ' }
       normalized_text.gsub!(/\bvandaag\b/, 'deze dag')
       normalized_text.gsub!(/\bmorgen\b/, 'volgende dag')
-      normalized_text.gsub!(/\bgisteren\b/, 'vorige dag')
+      normalized_text.gsub!(/\bgister(|en)\b/, 'afgelopen dag')
       normalized_text.gsub!(/\bochtends\b/, 'am')
-      
+      normalized_text.gsub!(/\bnamiddag\n/, '16:30')
+      normalized_text.gsub!(/\bvanavond\b/, 'deze avond')
+      normalized_text.gsub!(/\bvanochtend\b/, 'deze ochtend')
+      normalized_text.gsub!(/\bvanmiddag\b/, 'deze middag')
       normalized_text.gsub!(/\bmiddag\b/, '12:00')
       normalized_text.gsub!(/\bmidder nacht\b/, '23:59')      
-      normalized_text.gsub!(/\beerder\b/, 'verleden')
       normalized_text.gsub!(/\bnu\b/, 'op dit moment')
-      normalized_text.gsub!(/\b(geleden|voor die tijd)\b/, 'verleden')
+      normalized_text.gsub!(/\b(aan(staande|komende)|volgend)\b/, 'volgende')
+      normalized_text.gsub!(/\b(beerder|geleden|voor die tijd)\b/, 'verleden')
       normalized_text.gsub!(/\b(?:in|gedurende) de (morgen)\b/, '\1')
       normalized_text.gsub!(/\b(?:in de|gedurende|\'s) (middag|avond|nacht)(s?)\b/, '\1')
       normalized_text.gsub!(/\bvannacht\b/, 'deze nacht')
       normalized_text.gsub!(/\b\d+:?\d*[ap]\b/,'\0m')
       normalized_text.gsub!(/(\d)([ap]m|uur)\b/, '\1 \2')
-      normalized_text.gsub!(/\b(vandaar|na|van)\b/, 'toekomst')
+      normalized_text.gsub!(/\b(vandaar|van)\b/, 'toekomst')
       normalized_text = numericize_ordinals(normalized_text)
+      normalized_text
     end
     
     # Instead of 'saterday evening' a dutchman would write 'saterdayevening'
     def decompose_words(text) #:nodoc:
-      text.gsub!(/(morgen|avond|nacht|ochtend)\b/, ' \1')
+      text.gsub!(/vandaag/, 'deze dag')
+      text.gsub!(/\bvan(.*)/,'deze \1')
+      text.gsub!(/(morgen|avond|nacht|ochtend|middag)\b/, ' \1')
+      text
+    end
+    
+    #fixing stuff that was broken
+    def repair_words(text) #:nodoc:
+      text.gsub!(/gister en/, 'gisteren')
       text
     end
 

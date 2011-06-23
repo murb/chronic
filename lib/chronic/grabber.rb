@@ -9,9 +9,10 @@
     end
 
     def self.scan_for_all(token)
-      scanner = {/vorige/ => :last,
+      scanner = {/afgelopen/ => :last,
                  /deze/ => :this,
-                 /volgende/ => :next}
+                 /volgende/ => :next,
+                 /vorige/ => :last}
       scanner.keys.each do |scanner_item|
         return self.new(scanner[scanner_item]) if scanner_item =~ token.word
       end
