@@ -81,7 +81,7 @@ class Chronic::Repeater < Chronic::Tag #:nodoc:
   end
 
   def self.scan_for_times(token, options)
-    if token.word =~ /^\d{1,2}(:?\d{2})?([\.:]?\d{2})?$/
+    if token.word =~ /^\d{1,2}(:?\d{2})?([\.:]?\d{2})?(:)?$/
       return Chronic::RepeaterTime.new(token.word, options)
     end
     return nil
