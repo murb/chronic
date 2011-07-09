@@ -63,22 +63,8 @@ module Chronic
       # store now for later =)
       @now = options[:now]
 
-      # put the text into a normal format to ease scanning
-      text = self.pre_normalize(text)
-      # get base tokens for each word
-      @tokens = self.base_tokenize(text)
+      @tokens = tokenize(text,options)
       
-
-
-      # scan the tokens with each token scanner
-      [Repeater].each do |tokenizer|
-        @tokens = tokenizer.scan(@tokens, options)
-      end
-
-      [Grabber, Pointer, Scalar, Ordinal, Separator, TimeZone].each do |tokenizer|
-        @tokens = tokenizer.scan(@tokens)
-      end
-
       # strip any non-tagged tokens
       @tokens = @tokens.select { |token| token.tagged? }
 
@@ -102,6 +88,26 @@ module Chronic
       else
         return span
       end
+    end
+    
+    def tokenize(text, options)
+      # put the text into a normal format to ease scanning
+      text = self.pre_normalize(text)
+      # get base tokens for each word
+      tokens = self.base_tokenize(text)
+      
+      # scan the tokens with each token scanner
+      [Repeater].each do |tokenizer|
+        tokens = tokenizer.scan(tokens, options)
+      end
+
+      [Grabber, Pointer, Scalar, Ordinal, Separator, TimeZone].each do |tokenizer|
+        tokens = tokenizer.scan(tokens)
+      end
+
+      
+      
+      return tokens
     end
 
     # Clean up the specified input text by stripping unwanted characters,
