@@ -306,7 +306,7 @@ module Chronic
       #   raise(ChronicPain, "Invalid repeater: #{repeater.class}")
       # end
 
-      span = self.parse("this second", :guess => false, :now => @now)
+      span = self.parse("deze seconde", :guess => false, :now => @now)
 
       self.handle_srp(tokens, span, options)
     end
@@ -423,7 +423,6 @@ module Chronic
           break
         end
       end
-
       time_index = nil
       tokens.each_with_index do |t, i|
         if t.get_tag(RepeaterTime)
@@ -431,7 +430,6 @@ module Chronic
           break
         end
       end
-
       if (day_portion_index && time_index)
         t1 = tokens[day_portion_index]
         t1tag = t1.get_tag(RepeaterDayPortion)
@@ -458,20 +456,20 @@ module Chronic
 
 
       
-      # tokens.each_with_index do |t0, i|
-      #   t1 = tokens[i + 1]
-      #   if t1 && (t1tag = t1.get_tag(RepeaterDayPortion)) && t0.get_tag(RepeaterTime)
-      #     if [:morning].include?(t1tag.type)
-      #       puts '--morning->am' if Chronic.debug
-      #       t1.untag(RepeaterDayPortion)
-      #       t1.tag(RepeaterDayPortion.new(:am))
-      #     elsif [:afternoon, :evening, :night].include?(t1tag.type)
-      #       puts "--#{t1tag.type}->pm" if Chronic.debug
-      #       t1.untag(RepeaterDayPortion)
-      #       t1.tag(RepeaterDayPortion.new(:pm))
-      #     end
-      #   end
-      # end
+      tokens.each_with_index do |t0, i|
+        t1 = tokens[i + 1]
+        if t1 && (t1tag = t1.get_tag(RepeaterDayPortion)) && t0.get_tag(RepeaterTime)
+          if [:morning].include?(t1tag.type)
+            puts '--morning->am' if Chronic.debug
+            t1.untag(RepeaterDayPortion)
+            t1.tag(RepeaterDayPortion.new(:am))
+          elsif [:afternoon, :evening, :night].include?(t1tag.type)
+            puts "--#{t1tag.type}->pm" if Chronic.debug
+            t1.untag(RepeaterDayPortion)
+            t1.tag(RepeaterDayPortion.new(:pm))
+          end
+        end
+      end
 
       # handle ambiguous times if :ambiguous_time_range is specified
       if options[:ambiguous_time_range] != :none
