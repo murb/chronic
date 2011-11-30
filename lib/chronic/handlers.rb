@@ -26,7 +26,7 @@ module Chronic
                 Handler.new([:scalar_day, :repeater_month_name, :scalar_year, :repeater_day_portion?], :handle_rmn_sd_sy),
        
                  Handler.new([:scalar_day, :repeater_month_name, :scalar_year, :separator_at?, 'time?'], :handle_rmn_sd_sy),
-                 Handler.new([:scalar_day, :repeater_month_name, :separator_at?, 'time?'], :handle_rmn_sd),
+                 Handler.new([:repeater_day_name?, :separator_on?, :scalar_day, :repeater_month_name, :separator_at?, 'time?'], :handle_rmn_sd),
                  
                  Handler.new([:repeater_time, :repeater_day_portion?, :separator_on?, :scalar_day, :repeater_month_name], :handle_rmn_sd_on),
                  Handler.new([:ordinal_day, :repeater_month_name, :separator_at?, 'time?'], :handle_rmn_od),
@@ -43,8 +43,8 @@ module Chronic
 #afgelopen(grabber-last) dag(repeater-day) in(pointer-future, separator-in) de(ordinal) toekomst(pointer-future, timezone) 12:00(repeater-time-0?) 
 
        # tonight at 7pm
-       :anchor => [Handler.new([:grabber?, :repeater, :separator_at?, :repeater?, :repeater?], :handle_r),
-                   Handler.new([:grabber?, :repeater, :repeater, :separator_at?, :repeater?, :repeater?], :handle_r),
+       :anchor => [Handler.new([:separator_at?, :grabber?, :repeater, :separator_at?, :repeater?, :repeater?], :handle_r),
+                   Handler.new([:separator_at?, :grabber?, :repeater, :repeater, :separator_at?, :repeater?, :repeater?], :handle_r),
                  #          Handler.new([:grabber?, :repeater, :separator_in?, :ordinal, :pointer]),
                    Handler.new([:repeater, :grabber, :repeater], :handle_r_g_r)
                    ],
@@ -52,6 +52,7 @@ module Chronic
        # 3 weeks from now, in 2 months
        :arrow => [Handler.new([:scalar, :repeater, :pointer], :handle_s_r_p),
                   Handler.new([:pointer, :scalar, :repeater], :handle_p_s_r),
+                  Handler.new([:pointer, :scalar, :repeater, 'anchor'], :handle_p_s_r_a),
                   Handler.new([:scalar, :repeater, :pointer, 'anchor'], :handle_s_r_p_a)],
 
        # 3rd week in march
@@ -155,6 +156,7 @@ module Chronic
     end
 
     def handle_rmn_sd(tokens, options) #:nodoc:
+      tokens.delete_at(0) if tokens[0].get_tag(RepeaterDayName)
       handle_m_d(tokens[0].get_tag(ScalarDay).type, tokens[1].get_tag(RepeaterMonthName), tokens[2..tokens.size], options)
     end
 
@@ -314,6 +316,13 @@ module Chronic
     def handle_p_s_r(tokens, options) #:nodoc:
       new_tokens = [tokens[1], tokens[2], tokens[0]]
       self.handle_s_r_p(new_tokens, options)
+    end
+    
+    def handle_p_s_r_a(tokens, options) #:nodoc:
+      anchor_span = get_anchor(tokens[3..tokens.size - 1], options)
+      
+      new_tokens = [tokens[1], tokens[2], tokens[0]]
+      self.handle_srp(new_tokens, anchor_span, options)
     end
 
     def handle_s_r_p_a(tokens, options) #:nodoc:

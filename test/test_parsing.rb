@@ -31,7 +31,8 @@ class TestParsing < Test::Unit::TestCase
     assert_equal Time.local(2006, 5, 28, 17, 32, 19), time
 
     # rm_sd_on
-
+    
+    
     time = parse_now("5pm op 28 mei")
     assert_equal Time.local(2007, 5, 28, 17), time
     time = parse_now("5pm, 28 mei")
@@ -45,6 +46,12 @@ class TestParsing < Test::Unit::TestCase
 
     time = parse_now("27 mei")
     assert_equal Time.local(2007, 5, 27, 12), time
+    #Chronic.debug = true
+    time = parse_now("zondag 13 nov")
+    assert_equal Time.local(2006, 11, 13, 12), time
+    
+    time = parse_now("op 28 mei")
+    assert_equal Time.local(2007, 5, 28, 12), time
     
     time = parse_now("27ste mei")
     assert_equal Time.local(2007, 5, 27, 12), time
@@ -212,6 +219,11 @@ class TestParsing < Test::Unit::TestCase
 
     time = Chronic.parse("5", :now => Time.local(2006, 8, 16, 3, 0, 0, 0), :ambiguous_time_range => :none)
     assert_equal Time.local(2006, 8, 16, 5), time
+    
+    #Chronic.debug = true
+    time = parse_now("om 5 uur", :now => Time.local(2006, 8, 16, 3, 0, 0, 0))
+    assert_equal Time.local(2006, 8, 16, 17), time
+    
 
     time = parse_now("13:00")
     assert_equal Time.local(2006, 8, 16, 13), time
@@ -261,6 +273,7 @@ class TestParsing < Test::Unit::TestCase
 
     time = parse_now("4 november")
     assert_equal Time.local(2006, 11, 4, 12), time
+
 
     time = parse_now("24 aug")
     assert_equal Time.local(2006, 8, 24, 12), time
@@ -519,7 +532,6 @@ class TestParsing < Test::Unit::TestCase
   # end
   def test_parse_guess_s_r_p_future
     # future
-    Chronic.debug = true
   
     time = parse_now("over 3 jaar")
     assert_equal Time.local(2009, 8, 16, 14, 0, 0), time
@@ -532,7 +544,6 @@ class TestParsing < Test::Unit::TestCase
 
     time = parse_now("overmorgen")
     assert_equal Time.local(2006, 8 , 18, 14, 0, 0), time
-    
   
     time = parse_now("na 6 maanden")
     assert_equal Time.local(2007, 2, 16, 14), time
@@ -576,27 +587,32 @@ class TestParsing < Test::Unit::TestCase
   #     #     assert_equal Time.local(2006, 8, 16, 17), time
   #   end
   # 
-  #   def test_parse_guess_s_r_p_a
-  #     # past
-  #     # Chronic.debug = true
-  #     # 
-  #     # time = parse_now("gisteren, 3 jaar geleden")
-  #     # assert_equal Time.local(2003, 8, 17, 12), time
-  #     # 
-  #     # time = parse_now("komende vrijdag drie jaar geleden")
-  #     # assert_equal Time.local(2003, 8, 18, 12), time
-  #     # 
-  #     # time = parse_now("zaterdag, 3 maanden geleden om 5:00 pm")
-  #     # assert_equal Time.local(2006, 5, 19, 17), time
-  #     # 
-  #     # time = parse_now("2 dagen vanaf deze seconde")
-  #     # assert_equal Time.local(2006, 8, 18, 14), time
-  #     # 
-  #     # time = parse_now("7 uur voor morgen middernacht")
-  #     # assert_equal Time.local(2006, 8, 17, 17), time
-  # 
-  #     # future
-  #   end
+    def test_parse_guess_s_r_p_a
+    
+      
+
+      time = parse_now("overmorgen, 17:00")
+      assert_equal Time.local(2006, 8 , 18, 17, 0, 0), time
+end
+def test
+      
+      time = parse_now("gisteren, 3 jaar geleden")
+      assert_equal Time.local(2003, 8, 17, 12), time
+      
+      time = parse_now("komende vrijdag drie jaar geleden")
+      assert_equal Time.local(2003, 8, 18, 12), time
+      
+      time = parse_now("zaterdag, 3 maanden geleden om 5:00 pm")
+      assert_equal Time.local(2006, 5, 19, 17), time
+      
+      time = parse_now("2 dagen vanaf deze seconde")
+      assert_equal Time.local(2006, 8, 18, 14), time
+      
+      time = parse_now("7 uur voor morgen middernacht")
+      assert_equal Time.local(2006, 8, 17, 17), time
+  
+      
+    end
 
   def test_parse_guess_o_r_s_r
     

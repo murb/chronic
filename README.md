@@ -6,7 +6,7 @@ Chronic_NL
 Chronic_NL is a natural language date/time parser written in pure Ruby cloned and translated to Dutch from the original Chronic. See below
 for the wide variety of formats Chronic will parse.
 
-Note regarding Chronic_NL: not *everything* works from the original Chronic library works yet, see the examples below, and some solutions stil are a bit hacky. Still, I think its may be enough for many purposes. Hence I'm sharing it. I'll be testing it for the next couple of weeks in real life.
+Note regarding Chronic_NL: not *everything*  from the original Chronic library works yet, see the examples below, and some solutions stil are a bit hacky. Still, I think its may be enough for many purposes. Hence I'm sharing it. I'll be testing it for the next couple of weeks in real life.
 
 ## INSTALLATION
 
