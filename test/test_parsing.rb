@@ -544,6 +544,8 @@ class TestParsing < Test::Unit::TestCase
     
     time = parse_now("over 1 dag")
     assert_equal Time.local(2006, 8 , 17, 14, 0, 0), time
+    time = parse_now("nog 2 dagen")
+    assert_equal Time.local(2006, 8 , 18, 14, 0, 0), time
     
     time = parse_now("over 2 dagen")
     assert_equal Time.local(2006, 8 , 18, 14, 0, 0), time
