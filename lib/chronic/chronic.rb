@@ -116,6 +116,7 @@ module Chronic
     # ordinals (third => 3rd)
     def pre_normalize(text) #:nodoc:
       normalized_text = text.to_s.downcase
+      normalized_text.gsub!(/\b(\d\d)\.(\d\d)\b/, '\1:\2')
       normalized_text.gsub!(/\bvan de\b/,'')
       normalized_text.gsub!(/\beerste\b/,'1ste')
       normalized_text.gsub!(/\bderde\b/,'3de')

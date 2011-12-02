@@ -204,6 +204,10 @@ class TestParsing < Test::Unit::TestCase
 
     time = parse_now("1800-08-20")
     assert_equal Time.local(1800, 8, 20, 12, 0, 0), time
+    # Chronic.debug = true
+
+  time = parse_now("8 dec 19.00")
+  assert_equal Time.local(2006, 12, 8, 19, 0), time
 
   end
 
