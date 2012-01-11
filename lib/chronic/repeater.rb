@@ -28,6 +28,7 @@ class Chronic::Repeater < Chronic::Tag #:nodoc:
     scanner = {/^jan\.?(uari)?$/ => :january,
                /^feb\.?(ruari)?$/ => :february,
                /^maa\.?(rt)?$/ => :march,
+               /^mrt$/ => :march,
                /^apr\.?(il)?$/ => :april,
                /^mei$/ => :may,
                /^jun\.?i?$/ => :june,

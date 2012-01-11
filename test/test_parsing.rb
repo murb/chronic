@@ -205,12 +205,15 @@ class TestParsing < Test::Unit::TestCase
     time = parse_now("1800-08-20")
     assert_equal Time.local(1800, 8, 20, 12, 0, 0), time
     
-  time = parse_now("8 dec 19.00")
-  assert_equal Time.local(2006, 12, 8, 19, 0), time
-   #Chronic.debug = true
+    time = parse_now("8 dec 19.00")
+    assert_equal Time.local(2006, 12, 8, 19, 0), time
+     #Chronic.debug = true
   
-  time = parse_now("8 dec 19.00u")
-  assert_equal Time.local(2006, 12, 8, 19, 0), time
+    time = parse_now("8 dec 19.00u")
+    assert_equal Time.local(2006, 12, 8, 19, 0), time
+      # Chronic.debug = true
+    time = parse_now("vrijdag 23 mrt", :now=> Time.local(2012,1,11))
+    assert_equal Time.local(2012, 3, 23, 12), time
   end
 
   def test_parse_guess_r
@@ -626,12 +629,12 @@ def test
     
     time = parse_now("  3de woensdag van november")
     assert_equal Time.local(2006, 11, 15, 12), time
-
+ #Chronic.debug=true  
     time = parse_now("10de woensdag in november")
     assert_equal nil, time
-
-    # time = parse_now("3de woensdag van 2007")
-    #    assert_equal Time.local(2007, 1, 20, 12), time
+ # Chronic.debug=true   
+ #    time = parse_now("3de woensdag van 2007")
+ #    assert_equal Time.local(2007, 1, 20, 12), time
   end
 
   def test_parse_guess_o_r_g_r
