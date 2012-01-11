@@ -150,7 +150,7 @@ module Chronic
       normalized_text.gsub!(/\bvannacht\b/, 'deze nacht')
       normalized_text.gsub!(/\b\d+:?\d*[ap]\b/,'\0m')
       normalized_text.gsub!(/(\d)([ap]m|uur)\b/, '\1 \2')
-      normalized_text.gsub!(/\b(vandaar|van)\b/, 'toekomst')
+      normalized_text.gsub!(/\b(vandaar|van)\b/, 'deze')
       normalized_text = numericize_ordinals(normalized_text)
       normalized_text
     end
@@ -158,7 +158,7 @@ module Chronic
     # Instead of 'saterday evening' a dutchman would write 'saterdayevening'
     def decompose_words(text) #:nodoc:
       text.gsub!(/vandaag/, 'deze dag')
-      text.gsub!(/\bvan(.*)/,'deze \1')
+      text.gsub!(/\bvan(morgen|avond|nacht|ochtend|middag)/,'deze \1')
       text.gsub!(/(morgen|avond|nacht|ochtend|middag)\b/, ' \1')
       text
     end

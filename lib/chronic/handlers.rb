@@ -354,7 +354,6 @@ module Chronic
 
     def handle_o_r_g_r(tokens, options) #:nodoc:
       outer_span = get_anchor(tokens[2..3], options)
-      puts outer_span
       handle_orr(tokens[0..1], outer_span, options)
     end
     

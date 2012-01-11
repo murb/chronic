@@ -45,5 +45,10 @@ class TestChronic < Test::Unit::TestCase
     span = Chronic::Span.new(Time.local(2006, 11), Time.local(2006, 12))
     assert_equal Time.local(2006, 11, 16), Chronic.guess(span)
   end
+  
+  def test_decompose_words
+    assert_equal "vandecasteele", Chronic.decompose_words("vandecasteele")
+   # decompose_words
+  end
 
 end

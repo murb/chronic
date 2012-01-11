@@ -214,6 +214,10 @@ class TestParsing < Test::Unit::TestCase
       # Chronic.debug = true
     time = parse_now("vrijdag 23 mrt", :now=> Time.local(2012,1,11))
     assert_equal Time.local(2012, 3, 23, 12), time
+    
+    time = parse_now("di 21 feb, 20u")
+    
+    
   end
 
   def test_parse_guess_r
@@ -626,15 +630,14 @@ def test
     end
 
   def test_parse_guess_o_r_s_r
-    
-    time = parse_now("  3de woensdag van november")
+    time = parse_now("3de woensdag van november")
     assert_equal Time.local(2006, 11, 15, 12), time
  #Chronic.debug=true  
     time = parse_now("10de woensdag in november")
     assert_equal nil, time
- # Chronic.debug=true   
- #    time = parse_now("3de woensdag van 2007")
- #    assert_equal Time.local(2007, 1, 20, 12), time
+  # Chronic.debug=true   
+  #    time = parse_now("3de woensdag van 2007")
+  #    assert_equal Time.local(2007, 1, 20, 12), time
   end
 
   def test_parse_guess_o_r_g_r
