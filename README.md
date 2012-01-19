@@ -79,12 +79,12 @@ Simple
 * vorige week dinsdag #last week tuesday
 * morgen om 6:45pm #tomorrow at 6:45pm
 * gistermiddag #afternoon yesterday
+* 3 jaar geleden #3 years ago
 
 Complex (doesn't work (feel free to fix this))
 
-* 3 years ago
+* 7 uur geleden #7 hours ago (probleem: onderscheid uur (o'clock) en uur (eenheid))
 * 5 months before now
-* 7 hours ago
 * 7 days from now
 * 1 week hence
 * in 3 hours

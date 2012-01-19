@@ -131,6 +131,7 @@ module Chronic
       normalized_text.gsub!(/ \-(\d{4})\b/, ' tzminus\1')
       normalized_text.gsub!(/([\/\-\,\@])/) { ' ' + $1 + ' ' }
       normalized_text.gsub!(/\bvandaag\b/, 'deze dag')
+      normalized_text.gsub!(/\beergisteren\b/, '2 dagen geleden')
       normalized_text.gsub!(/\bmorgen\b/, 'volgende dag')
       normalized_text.gsub!(/\bgister(|en)\b/, 'afgelopen dag')
       normalized_text.gsub!(/\bochtends\b/, 'am')
@@ -165,6 +166,7 @@ module Chronic
     
     #fixing stuff that was broken
     def repair_words(text) #:nodoc:
+      text.gsub!(/geled en/, 'geleden')
       text.gsub!(/gister en/, 'gisteren')
       text
     end

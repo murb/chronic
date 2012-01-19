@@ -609,24 +609,41 @@ class TestParsing < Test::Unit::TestCase
       time = parse_now("overmorgen, 17:00")
       assert_equal Time.local(2006, 8 , 18, 17, 0, 0), time
 end
-def test
-      
-      time = parse_now("gisteren, 3 jaar geleden")
-      assert_equal Time.local(2003, 8, 17, 12), time
-      
-      time = parse_now("komende vrijdag drie jaar geleden")
-      assert_equal Time.local(2003, 8, 18, 12), time
-      
-      time = parse_now("zaterdag, 3 maanden geleden om 5:00 pm")
-      assert_equal Time.local(2006, 5, 19, 17), time
-      
-      time = parse_now("2 dagen vanaf deze seconde")
-      assert_equal Time.local(2006, 8, 18, 14), time
-      
-      time = parse_now("7 uur voor morgen middernacht")
-      assert_equal Time.local(2006, 8, 17, 17), time
+def test_verleden
   
+      #   
+      # 
+      #time = parse_now("gisteren, 3 jaar geleden", :context => :past)
+      # #    assert_equal Time.local(2003, 8, 17, 12), time
+      # #       
+      # time = parse_now("komende vrijdag drie jaar geleden")
+      # assert_equal Time.local(2003, 8, 18, 12), time
+      # 
+      # time = parse_now("zaterdag, 3 maanden geleden om 5:00 pm")
+      # assert_equal Time.local(2006, 5, 19, 17), time
+      # 
+      # time = parse_now("2 dagen vanaf deze seconde")
+      # assert_equal Time.local(2006, 8, 18, 14), time
+      # 
+      # time = parse_now("7 uur voor morgen middernacht")
+      # assert_equal Time.local(2006, 8, 17, 17), time
+
+      time = parse_now("gisteren", :context => :past)
+      assert_equal Time.local(2006, 8, 15, 12), time
       
+      time = parse_now("2 dagen geleden")
+      assert_equal Time.local(2006, 8, 14, 14), time
+
+      time = parse_now("eergisteren")
+      assert_equal Time.local(2006, 8, 14, 14), time
+      
+      time = parse_now("5 jaar geleden")
+      assert_equal Time.local(2001, 8, 16, 14), time
+      
+      # Chronic.debug=true 
+      #       time = parse_now("2 uur geleden")
+      #       assert_equal Time.local(2006, 8, 16, 7), time
+      #       
     end
 
   def test_parse_guess_o_r_s_r

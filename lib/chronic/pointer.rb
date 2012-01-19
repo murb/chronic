@@ -10,7 +10,8 @@ module Chronic
     end
 
     def self.scan_for_all(token)
-      scanner = {/\bverleden\b/ => :past,
+      scanner = {
+                 /\bverleden\b/ => :past,
                  /\btoekomst\b/ => :future,
                  /\bover\b/ => :future,
                  /\bna\b/ => :future,          
